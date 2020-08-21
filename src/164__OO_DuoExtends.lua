@@ -40,13 +40,13 @@ end
 local function createClass(...)--接收所有的基类
     local allBase = {...}
     local c = {}--定义一个供外部创建实例的中间类, 中间过渡用的
-    setmetatable(c, {__index = function (t, k)--__index定义成函数时，要有返回值
+    setmetatable(c, {__index = function (t, k)--__index定义成函数时，要有返回值***这是c的元表***
         return search(allBase, k)
     end})
 
     function c:new(n)
         n = n or {}
-        setmetatable(n, c)
+        setmetatable(n, c) --- 这是n的元表
         c.__index = c
         return n
     end

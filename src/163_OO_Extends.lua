@@ -7,6 +7,18 @@
 ---污一把吧。定义一个女孩的类(有默认值)
 ---GirlAa继承GirlA继承Girl
 
+--- ******自定义的元表  setmetatable(t,mt); 表示找不到的时候，再去哪里找*********
+----*******在调用table不存在的字段时，会调用__index元方法******
+--- ****** 定义元表和设置__index是一起的。 __index可以在外面单独设置，也可以在里面直接设置
+
+---setmetatable(c, {__index = function (t, k)--__index定义成函数时，要有返回值***这是c的元表***
+---    return search(allBase, k)
+---end})
+
+---setmetatable(another, self)
+---self.__index = self--定义到这里却没问题
+
+
 local Girl = {
     xiongwei = 30,
     yaowei = 20,
@@ -19,7 +31,7 @@ local Girl = {
     new = function (self, another)
         another = another or {}
         setmetatable(another, self)
-        self.__index = self--定义到这里却没问题
+        self.__index = self--定义到这里却没问题    *****在调用table不存在的字段时，会调用__index元方法*****
         return another
     end,
 }
